@@ -38,3 +38,20 @@ type Comment {
     reply: String!
     post: Post! @belongsTo
 }
+
+type Mutation {
+  createUser(
+      name: String! @rules(apply: ["required", "min:2"])
+      email: String! @rules(apply: ["email", "unique:users"])
+      password: String! @rules(apply: ["min: 4"]) @bcrypt
+      ): User! @create
+
+  updateUser(
+        id: ID!
+        name: String! @rules(apply: ["required", "min:2"])
+        email: String! @rules(apply: ["email", "unique:users"])
+        password: String! @rules(apply: ["min: 4"]) @bcrypt
+    ): User! @update
+
+  deleteUser(id: ID!): User @delete
+}
